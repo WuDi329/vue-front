@@ -51,20 +51,15 @@ const actions = {
   },
 
 
-  // user login wudi version
-  llogin(userInfo) {
-    //debugger
-    //const { username, password } = userInfo
-    console.log(userInfo.username + '      username')
-    console.log(userInfo.password + '      password')
+  llogin({ commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      console.log("hello11111")
-      doLogin({ username: 'admin', password: '123456' }).then(response => {
-        console.log(response+'here is index/dologin response')
-          resolve()
+      doLogin( userInfo ).then(response => {
+        commit('SET_TOKEN', response.token)
+        setToken(response.token)
+        resolve()
       }).catch(error => {
-        console.log(error+'here is index/dologin response')
-          reject()
+        console.log(error)
+        reject()
       })
     })
   },
@@ -91,17 +86,18 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
+        console.log(response)
+        // const { data } = response
 
-        if (!data) {
+        if (!response.info) {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { name, avatar } = response.info
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
-        resolve(data)
+        resolve(response.info)
       }).catch(error => {
         reject(error)
       })

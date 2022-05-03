@@ -54,8 +54,9 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
-import { doLogin, getCSRFtoken } from '@/api/login'
+import { setToken } from '@/utils/auth'
+import { doLogin } from '@/api/login'
+import { llogin } from '@/store/modules/user'
 
 export default {
   name: 'Login',
@@ -107,43 +108,65 @@ export default {
         this.$refs.password.focus()
       })
     },
-    llogin(userInfo) {
-      //debugger
-      console.log(this.userInfo)
-      //const { username, password } = userInfo
-      console.log(userInfo.username + '      username')
-      console.log(userInfo.password + '      password')
-      return new Promise((resolve, reject) => {
-        console.log("1111")
-        doLogin( userInfo ).then(response => {
-          console.log("2222")
-          console.log(response+'here is index/dologin response')
-            resolve()
-        }).catch(error => {
-           console.log("3333")
-          console.log(error+'here is index/dologin response')
-            reject()
-        })
-      })
-    },
+    // llogin(userInfo) {
+    //   const { username, password } = userInfo
+    //   return new Promise((resolve, reject) => {
+    //     doLogin( userInfo ).then(response => {
+    //       console.log("2222")
+    //       console.log(response+'here is index/dologin response')
+    //         resolve()
+    //     }).catch(error => {
+    //        console.log("3333")
+    //       console.log(error+'here is index/dologin response')
+    //         reject()
+    //     })
+    //   })
+    // },
+
+    //this paragraph is okkkkkkkkkkkkk to 145
+    // handleLogin() {
+    //   // here wrap the origin api (user/login means user.js/login ) i should already have xtoken
+    //   this.$refs.loginForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true
+    //       // console.log(this.loginForm)
+
+    //       // console.log(this.loginForm.username+'originloginform')
+    //       // console.log("1111===")
+    //       // console.log(this.loginForm.password+'originloginform')
+    //       doLogin(this.loginForm).then((response) => {
+    //         console.log(response)
+    //         commit('SET_TOKEN', response.token)
+    //         setToken(data.token)
+    //         this.$router.push({ path: '@/views/dashboard/index' })
+    //         this.loading = false
+    //       });
+    //     }
+    //   })
+    // },
+
     handleLogin() {
       // here wrap the origin api (user/login means user.js/login ) i should already have xtoken
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          // console.log(this.loginForm)
-
-          // console.log(this.loginForm.username+'originloginform')
-          // console.log("1111===")
-          // console.log(this.loginForm.password+'originloginform')
-          doLogin(this.loginForm).then((response) => {
-            console.log(response)
-            this.$router.push({ path: '@/views/dashboard/index' })
+          this.$store.dispatch('user/llogin', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          });
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit')
+          return false
         }
       })
     },
+
+
+
+
+
           // this.$store.dispatch('user/llogin', this.loginForm).then(() => {
           //   console.log('fnishi login')
           //   this.$router.push({ path: this.redirect || '/' })
