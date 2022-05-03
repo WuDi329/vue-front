@@ -1,10 +1,13 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, getXCSRFToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { doLogin, getCSRFtoken } from '@/api/login'
+// import { reject, resolve } from 'core-js/fn/promise'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
+    XCSRFToken: '',
     name: '',
     avatar: ''
   }
@@ -24,6 +27,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_XCSRFToken: (state, XCSRFToken) => {
+    state.XCSRFToken = XCSRFToken
   }
 }
 
@@ -34,6 +40,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
+        //frome response get token
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -42,6 +49,40 @@ const actions = {
       })
     })
   },
+
+
+  // user login wudi version
+  llogin({ commit }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      doLogin({ username: username.trim(), password: password }).then(response => {
+        const { data } = response
+        //frome response get token, set_token is a mounted method
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  getCToken({ commit }) {
+    return new Promise((resolve, reject) => {
+      debugger
+      getCSRFtoken().then(response => {
+        print(response)
+        commit('SET_XCSRFToken',response.token)
+        debugger
+        resolve()
+      }).catch(error => {
+        print('getctoken error')
+        reject(error)
+      })
+    })
+  },
+
+
 
   // get user info
   getInfo({ commit, state }) {

@@ -106,23 +106,52 @@ export default {
       })
     },
     handleLogin() {
+      // here wrap the origin api (user/login means user.js/login ) i should already have xtoken
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/llogin', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false
+            console.log('error submit!!')
           })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+
+          } else {
+            console.log('error submit123123!!')
+            return false
+          }
+        })
+      }
+    
+      
+
+
+    //   this.$refs.loginForm.validate(valid => {
+    //     if (valid) {
+    //       this.loading = true
+    //       this.$store.dispatch('user/login', this.loginForm).then(() => {
+    //         this.$router.push({ path: this.redirect || '/' })
+    //         this.loading = false
+    //       }).catch(() => {
+    //         this.loading = false
+    //       })
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   })
+    // }
+
+
+      },
+      created() {
+        this.$store.dispatch('user/getCToken')
+      }
     }
-  }
-}
+  
+
 </script>
 
 <style lang="scss">

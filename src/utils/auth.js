@@ -10,6 +10,11 @@ export function setToken(token) {
   return Cookies.set(TokenKey, token)
 }
 
+//add sth
+export function getXCSRFToken() {
+  return Cookies.set(TokenKey)
+}
+
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
