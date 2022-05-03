@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: 'http://localhost:8000', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
@@ -17,7 +17,7 @@ service.interceptors.request.use(
     // do something before request is sent
     if (config.method === 'post'){
       // debugger
-      print(store.state.CSRFToken)
+      console.log(this.$store.getters.XCSRFToken+'    store.getters.XCSRFTOKEN')
       config.headers['X-CSRFToken'] = this.$store.getters.XCSRFToken
       // store.state.CSRFToken;
     }

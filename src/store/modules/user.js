@@ -52,31 +52,34 @@ const actions = {
 
 
   // user login wudi version
-  llogin({ commit }, userInfo) {
-    const { username, password } = userInfo
+  llogin(userInfo) {
+    //debugger
+    console.log(userInfo)
+    //const { username, password } = userInfo
+    console.log(userInfo.username + '      username')
+    console.log(userInfo.password + '      password')
     return new Promise((resolve, reject) => {
-      doLogin({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        //frome response get token, set_token is a mounted method
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      doLogin({ 'username': 'admin', 'password': '123456' }).then(response => {
+        console.log(response+'here is index/dologin response')
+          resolve()
       }).catch(error => {
-        reject(error)
+        console.log(error+'here is index/dologin response')
+          reject()
       })
     })
   },
 
   getCToken({ commit }) {
     return new Promise((resolve, reject) => {
-      debugger
+      //debugger
       getCSRFtoken().then(response => {
-        print(response)
+        console.log(response)
+        console.log('here is getctoken')
         commit('SET_XCSRFToken',response.token)
-        debugger
+        //debugger
         resolve()
       }).catch(error => {
-        print('getctoken error')
+        console.log('getctoken error')
         reject(error)
       })
     })

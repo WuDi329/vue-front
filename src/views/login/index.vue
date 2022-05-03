@@ -113,6 +113,7 @@ export default {
           this.$store.dispatch('user/llogin', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
+            console.log('fnishi the change of route')
           }).catch(() => {
             this.loading = false
             console.log('error submit!!')

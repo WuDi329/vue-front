@@ -4,6 +4,6 @@ const getters = {
   token: state => state.user.token,
   avatar: state => state.user.avatar,
   name: state => state.user.name,
-  XCSRFToken: XCSRFToken => state.user.XCSRFToken,
+  XCSRFToken: state => state.user.XCSRFToken,
 }
 export default getters
