@@ -54,12 +54,12 @@ const actions = {
   // user login wudi version
   llogin(userInfo) {
     //debugger
-    console.log(userInfo)
     //const { username, password } = userInfo
     console.log(userInfo.username + '      username')
     console.log(userInfo.password + '      password')
     return new Promise((resolve, reject) => {
-      doLogin({ 'username': 'admin', 'password': '123456' }).then(response => {
+      console.log("hello11111")
+      doLogin({ username: 'admin', password: '123456' }).then(response => {
         console.log(response+'here is index/dologin response')
           resolve()
       }).catch(error => {
@@ -75,7 +75,7 @@ const actions = {
       getCSRFtoken().then(response => {
         console.log(response)
         console.log('here is getctoken')
-        commit('SET_XCSRFToken',response.token)
+        commit('SET_XCSRFToken',response.Xtoken)
         //debugger
         resolve()
       }).catch(error => {

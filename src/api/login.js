@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function doLogin(params) {
+export function doLogin(data) {
   return request({
-    url: '/doLogin/',
+    url: 'http://localhost:8000/doLogin/',
     method: 'post',
-    params
+    data: data
   })
 }
 

@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 // create an axios instance
 const service = axios.create({
   baseURL: 'http://localhost:8000', // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
+  withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
 
@@ -15,10 +15,10 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (config.method === 'post'){
+    if (config.method == 'post'){
       // debugger
-      console.log(this.$store.getters.XCSRFToken+'    store.getters.XCSRFTOKEN')
-      config.headers['X-CSRFToken'] = this.$store.getters.XCSRFToken
+      console.log(store.getters.XCSRFToken+'    store.getters.XCSRFTOKEN')
+      config.headers['X-CSRFToken'] = store.getters.XCSRFToken
       // store.state.CSRFToken;
     }
 
