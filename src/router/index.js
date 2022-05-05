@@ -112,6 +112,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/picture',
+    name: 'Test',
+    meta: { title: 'Test', icon: 'el-icon-timer' },
+    children: [{
+      path: 'picture',
+      name: 'Picture',
+      component: () => import('@/views/test/picture'),
+      meta: { title: 'Picture', icon: 'dashboard' }
+    }]
+  },
+
+  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
