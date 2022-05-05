@@ -56,6 +56,27 @@ export const constantRoutes = [
   },
 
   {
+    path: '/time',
+    component: Layout,
+    redirect: '/time/table',
+    name: 'Time',
+    meta: { title: 'Time', icon: 'el-icon-timer'},
+    children: [{
+      path: 'table',
+      name: 'Table',
+      component: () => import('@/views/time/table'),
+      meta: {title: 'Table', icon: 'table' }
+    },
+    {
+      path: 'graph',
+      name: 'Graph',
+      component: () => import('@/views/time/graph'),
+      meta: {title: 'Graph', icon: 'el-icon-s-data'}
+    }
+  ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
@@ -149,16 +170,16 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
