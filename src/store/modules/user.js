@@ -40,7 +40,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        //frome response get token
+        // frome response get token
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -50,10 +50,9 @@ const actions = {
     })
   },
 
-
   llogin({ commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      doLogin( userInfo ).then(response => {
+      doLogin(userInfo).then(response => {
         commit('SET_TOKEN', response.token)
         setToken(response.token)
         resolve()
@@ -66,12 +65,12 @@ const actions = {
 
   getCToken({ commit }) {
     return new Promise((resolve, reject) => {
-      //debugger
+      // debugger
       getCSRFtoken().then(response => {
         console.log(response)
         console.log('here is getctoken')
-        commit('SET_XCSRFToken',response.Xtoken)
-        //debugger
+        commit('SET_XCSRFToken', response.Xtoken)
+        // debugger
         resolve()
       }).catch(error => {
         console.log('getctoken error')
@@ -79,8 +78,6 @@ const actions = {
       })
     })
   },
-
-
 
   // get user info
   getInfo({ commit, state }) {

@@ -60,20 +60,20 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/time/table',
     name: 'Time',
-    meta: { title: 'Time', icon: 'el-icon-timer'},
+    meta: { title: 'Time', icon: 'el-icon-timer' },
     children: [{
       path: 'table',
       name: 'Table',
       component: () => import('@/views/time/table'),
-      meta: {title: 'Table', icon: 'table' }
+      meta: { title: 'Table', icon: 'table' }
     },
     {
       path: 'graph',
       name: 'Graph',
       component: () => import('@/views/time/graph'),
-      meta: {title: 'Graph', icon: 'el-icon-s-data'}
+      meta: { title: 'Graph', icon: 'el-icon-s-data' }
     }
-  ]
+    ]
   },
 
   {

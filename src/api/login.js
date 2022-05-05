@@ -9,9 +9,8 @@ export function doLogin(data) {
 }
 
 export function getCSRFtoken() {
-  //debugger
   return request({
-      url: 'http://localhost:8000/get-token/',
-      method: 'get'
+    url: 'http://localhost:8000/get-token/',
+    method: 'get'
   })
 }

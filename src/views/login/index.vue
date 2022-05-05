@@ -54,9 +54,6 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { setToken } from '@/utils/auth'
-import { doLogin } from '@/api/login'
-import { llogin } from '@/store/modules/user'
 
 export default {
   name: 'Login',
@@ -97,6 +94,9 @@ export default {
       immediate: true
     }
   },
+  created() {
+    this.$store.dispatch('user/getCToken')
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -108,43 +108,6 @@ export default {
         this.$refs.password.focus()
       })
     },
-    // llogin(userInfo) {
-    //   const { username, password } = userInfo
-    //   return new Promise((resolve, reject) => {
-    //     doLogin( userInfo ).then(response => {
-    //       console.log("2222")
-    //       console.log(response+'here is index/dologin response')
-    //         resolve()
-    //     }).catch(error => {
-    //        console.log("3333")
-    //       console.log(error+'here is index/dologin response')
-    //         reject()
-    //     })
-    //   })
-    // },
-
-    //this paragraph is okkkkkkkkkkkkk to 145
-    // handleLogin() {
-    //   // here wrap the origin api (user/login means user.js/login ) i should already have xtoken
-    //   this.$refs.loginForm.validate(valid => {
-    //     if (valid) {
-    //       this.loading = true
-    //       // console.log(this.loginForm)
-
-    //       // console.log(this.loginForm.username+'originloginform')
-    //       // console.log("1111===")
-    //       // console.log(this.loginForm.password+'originloginform')
-    //       doLogin(this.loginForm).then((response) => {
-    //         console.log(response)
-    //         commit('SET_TOKEN', response.token)
-    //         setToken(data.token)
-    //         this.$router.push({ path: '@/views/dashboard/index' })
-    //         this.loading = false
-    //       });
-    //     }
-    //   })
-    // },
-
     handleLogin() {
       // here wrap the origin api (user/login means user.js/login ) i should already have xtoken
       this.$refs.loginForm.validate(valid => {
@@ -161,53 +124,9 @@ export default {
           return false
         }
       })
-    },
-
-
-
-
-
-          // this.$store.dispatch('user/llogin', this.loginForm).then(() => {
-          //   console.log('fnishi login')
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          //   console.log('error submit!!')
-          // })
-
-          // } else {
-          //   console.log('error submit123123!!')
-          //   return false
-          // }
-       
-      
-      
-      
-    
-    //   this.$refs.loginForm.validate(valid => {
-    //     if (valid) {
-    //       this.loading = true
-    //       this.$store.dispatch('user/login', this.loginForm).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //         this.loading = false
-    //       }).catch(() => {
-    //         this.loading = false
-    //       })
-    //     } else {
-    //       console.log('error submit!!')
-    //       return false
-    //     }
-    //   })
-    // }
-
-
-  },
-      created() {
-        this.$store.dispatch('user/getCToken')
-      }
+    }
+  }
 }
-  
 
 </script>
 

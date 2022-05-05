@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-axios.defaults.withCredentials = true;
-
+axios.defaults.withCredentials = true
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  //'http://localhost:8000', // url = base url + request url
+  // 'http://localhost:8000', // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
@@ -16,9 +15,9 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (config.method == 'post'){
+    if (config.method === 'post') {
       // debugger
-      console.log(store.getters.XCSRFToken+'    store.getters.XCSRFTOKEN')
+      console.log(store.getters.XCSRFToken + '    store.getters.XCSRFTOKEN')
       config.headers['X-CSRFToken'] = store.getters.XCSRFToken
       // store.state.CSRFToken;
     }
@@ -52,7 +51,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    //response.data
+    // response.data
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
