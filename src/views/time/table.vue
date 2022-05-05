@@ -8,34 +8,41 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="95" prop="id">
+      <el-table-column align="center" label="ID"  prop="id" width="95">
+        <!-- width="95" -->
           <!-- {{ scope.row.id }} -->
       </el-table-column>
-      <el-table-column label="Title" prop="elf_name">
-        <!-- <template slot-scope="scope">
-          {{ scope.row.elf_name }}
-        </template> -->
+      <el-table-column label="run date" prop="run_time" :formatter="dateFormat">
+        <!--  -->
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center" prop="run_time">
-        <!-- <template slot-scope="scope">
-          <span>{{ scope.row.user_time }}</span>
-        </template> -->
+      <el-table-column label="elf name" prop="elf_name" width="180" align="center">
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center" prop="sys_time">
-        <!-- <template slot-scope="scope">
-          {{ scope.row.sys_time }}
-        </template> -->
+      <el-table-column label="user time(s)"  align="center" prop="user_time">
+        <!-- width="110" -->
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center" prop="cpu_per">
-        <!-- <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ row.cpu_per }}</el-tag>
-        </template> -->
+      <el-table-column label="system time(s)"  align="center" prop="sys_time">
+        <!-- width="110" -->
       </el-table-column>
-      <el-table-column align="center" prop="max_size" label="Display_time" width="200">
-        <!-- <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.max_size }}</span>
-        </template> -->
+      <el-table-column label="elapse time(s)"  align="center" prop="elapse_time">
+        <!-- width="110" -->
+      </el-table-column>
+      <el-table-column label="user percent"  align="center" key="slot">
+        <template #default={row}>
+          <span>{{getrate(row.user_time, row.sys_time)}}</span>
+        </template>
+        <!-- width="110" -->
+      </el-table-column>
+      <el-table-column  label="cpu percent(%)"  align="center" prop="cpu_per">        
+        <!-- width="110" -->
+      </el-table-column>
+      <el-table-column align="center" prop="max_size" label="max size(kb)" >
+        <!-- width="200" -->
+      </el-table-column>
+      <el-table-column align="center" prop="page_fault" label="page fault" >
+        <!-- width="200" -->
+      </el-table-column>
+      <el-table-column align="center" prop="mpage_fault" label="minor page fault" >
+        <!-- width="200" -->
       </el-table-column>
     </el-table>
   </div>
@@ -43,6 +50,7 @@
 
 <script>
 import { getTime, getAllTime, addTime } from '@/api/time'
+import moment from 'moment'
 
 export default {
   filters: {
@@ -73,6 +81,15 @@ export default {
         this.listLoading = false
         console.log(this.list)
       })
+    },
+    dateFormat(row, column) {
+      var date = row[column.property];
+      return moment(date).format("YY-MM-DD HH:mm:ss")
+    },
+    getrate(user, sys) {
+      user = Number(user)
+      sys = Number(sys)
+      return (user/(user+sys)).toFixed(2)
     }
   }
 }
