@@ -22,3 +22,11 @@ export function getTime(params) {
     params
   })
 }
+
+export function getAvgTime(params) {
+  return request({
+    url: 'http://localhost:8000/time/avg/',
+    method: 'get',
+    params
+  })
+}
