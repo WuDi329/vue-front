@@ -101,6 +101,9 @@ export default {
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {
+        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
+        label: 'memtier_benchmark_static'
+      }, {
         value: '选项2',
         label: '双皮奶'
       }, {
@@ -116,6 +119,9 @@ export default {
       options2: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
+      }, {
+        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
+        label: 'memtier_benchmark_static'
       }, {
         value: '选项2',
         label: '双皮奶'
