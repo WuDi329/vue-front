@@ -25,7 +25,7 @@
 
 <script>
 import * as echarts from 'echarts'
-import { getAvgTime } from '@/api/time'
+import { getSize } from '@/api/size'
 
 export default {
   data() {
@@ -87,16 +87,13 @@ export default {
     getData() {
       this.disabled = true
       var params = { 'processname': this.value }
-      getAvgTime(params).then(response => {
+      getSize(params).then(response => {
         console.log(response)
         const pname = response.elf_name
 
         var key_list = Object.keys(response.data[0])
         var value_list1 = Object.values(response.data[0])
         var value_list2 = Object.values(response.data[1])
-        key_list.unshift('shuxing')
-        value_list1.unshift(pname)
-        value_list2.unshift(pname + '_static')
 
         console.log(key_list)
         console.log(value_list1)

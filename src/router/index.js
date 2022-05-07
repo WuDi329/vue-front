@@ -77,6 +77,27 @@ export const constantRoutes = [
   },
 
   {
+    path: '/size',
+    component: Layout,
+    redirect: '/size/table',
+    name: 'Size',
+    meta: { title: 'Size', icon: 'el-icon-timer' },
+    children: [{
+      path: 'table',
+      name: 'SizeTable',
+      component: () => import('@/views/size/table'),
+      meta: { title: 'Table', icon: 'table' }
+    },
+    {
+      path: 'graph',
+      name: 'SizeGraph',
+      component: () => import('@/views/size/graph'),
+      meta: { title: 'Graph', icon: 'el-icon-s-data' }
+    }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
