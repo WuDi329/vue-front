@@ -11,7 +11,7 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" @click="getSizeExperiment">search</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" @click="getPerfExperiment">search</el-button>
           <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
             <el-option
               v-for="item in options2"
@@ -20,40 +20,124 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addSizeExperiment">add</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addPerfExperiment">add</el-button>
         </div>
       </template>
     </el-header>
     <el-main>
-      <el-table
-        v-loading="listLoading"
-        :data="list"
-        element-loading-text="Loading"
-        border
-        fit
-        highlight-current-row
-      >
-        <el-table-column label="elf name" prop="elf_name" align="center" />
-        <el-table-column label="text length" align="center" prop="text_length">
-        <!--  -->
-        </el-table-column>
-        <el-table-column label="data length" align="center" prop="data_length">
-        <!-- width="110" -->
-        </el-table-column>
-        <el-table-column label="bss length" align="center" prop="bss_length">
-        <!-- width="110" -->
-        </el-table-column>
-        <el-table-column label="total length" align="center" prop="dec_length">
-        <!-- width="110" -->
-        </el-table-column>
-      </el-table>
+      <template>
+  <el-table
+    :data="list"
+    border
+    style="width: 100%"
+    fit>
+    <el-table-column
+      fixed
+      prop="id"
+      align="center"
+      label="id"
+      width="50px">
+    </el-table-column>
+    <el-table-column
+      prop="elf_name"
+      label="elf name"
+      align="center"
+      width="250px">
+    </el-table-column>
+    <el-table-column
+      prop="params"
+      label="params"
+      align="center"
+      width="250px">
+    </el-table-column>
+    <el-table-column
+      prop="run_time"
+      label="run time"
+      align="center"
+      width="250px"
+      :formatter="dateFormat">
+    </el-table-column>
+    <el-table-column
+      prop="cpu_utilize"
+      align="center"
+      label="cpu utilize"
+      width="100px">
+    </el-table-column>
+    <el-table-column
+      prop="instructions"
+      align="center"
+      label="instructions number"
+      width="200px">
+    </el-table-column>
+    <el-table-column
+      prop="branches"
+      align="center"
+      width="200px"
+      label="branches number">
+    </el-table-column>
+    <el-table-column
+      prop="branches_misses"
+      align="center"
+      width="200px"
+      label="branches misses">
+    </el-table-column>
+    <el-table-column
+      prop="l1_dcache"
+      align="center"
+      width="200px"
+      label="l1 dcache">
+    </el-table-column>
+    <el-table-column
+      prop="l1_dcache_misses"
+      align="center"
+      width="200px"
+      label="l1 dcache misses">
+    </el-table-column>
+    <el-table-column
+      prop="llc_cache"
+      align="center"
+      width="200px"
+      label="llc cache">
+    </el-table-column>
+    <el-table-column
+      prop="llc_cache_misses"
+      align="center"
+      width="200px"
+      label="llc cache misses">
+    </el-table-column>
+    <el-table-column
+      prop="l1_icache_misses"
+      align="center"
+      width="200px"
+      label="l1 icache misses">
+    </el-table-column>
+    <el-table-column
+      prop="dtlb_cache"
+      align="center"
+      width="200px"
+      label="dtlb cache">
+    </el-table-column>
+    <el-table-column
+      prop="dtlb_cache_misses"
+      align="center"
+      width="200px"
+      label="dtlb cache misses">
+    </el-table-column>
+    <el-table-column
+      prop="itlb_cache_misses"
+      align="center"
+      width="200px"
+      label="itlb cache misses">
+    </el-table-column>
+  </el-table>
+</template>
     </el-main>
   </el-container>
 </template>
 
 <script>
-import { addSize, getAllSize, getSize } from '@/api/size'
-
+import { addPerf, getAllPerf, getPerf } from '@/api/perf'
+import moment from 'moment'
 export default {
   filters: {
     statusFilter(status) {
@@ -120,7 +204,7 @@ export default {
     fetchData() {
       this.listLoading = true
       this.disabled = true
-      getAllSize().then(response => {
+      getAllPerf().then(response => {
         console.log(response)
         this.list = response.data
         this.listLoading = false
@@ -128,21 +212,25 @@ export default {
         console.log(this.list)
       })
     },
-    addSizeExperiment() {
+    dateFormat(row, column) {
+      var date = row[column.property]
+      return moment(date).format('YY-MM-DD HH:mm:ss')
+    },
+    addPerfExperiment() {
       this.listLoading = true
       this.disabled = true
       var params = { 'processname': this.value2 }
-      addSize(params).then(response => {
+      addPerf(params).then(response => {
         console.log(response)
         this.listLoading = false
         this.disabled = false
       })
     },
-    getSizeExperiment() {
+    getPerfExperiment() {
       this.listLoading = true
       this.disabled = true
       var params = { 'processname': this.value }
-      getSize(params).then(response => {
+      getPerf(params).then(response => {
         console.log(response)
         this.list = response.data
         this.listLoading = false
