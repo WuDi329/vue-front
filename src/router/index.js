@@ -86,13 +86,34 @@ export const constantRoutes = [
       path: 'table',
       name: 'SizeTable',
       component: () => import('@/views/size/table'),
-      meta: { title: 'Table', icon: 'table' }
+      meta: { title: 'SizeTable', icon: 'table' }
     },
     {
       path: 'graph',
       name: 'SizeGraph',
       component: () => import('@/views/size/graph'),
-      meta: { title: 'Graph', icon: 'el-icon-s-data' }
+      meta: { title: 'SizeGraph', icon: 'el-icon-s-data' }
+    }
+    ]
+  },
+
+  {
+    path: '/perf',
+    component: Layout,
+    redirect: '/perf/table',
+    name: 'Perf',
+    meta: { title: 'Perf', icon: 'el-icon-timer' },
+    children: [{
+      path: 'table',
+      name: 'PerfTable',
+      component: () => import('@/views/perf/table'),
+      meta: { title: 'PerfTable', icon: 'table' }
+    },
+    {
+      path: 'graph',
+      name: 'SizeGraph',
+      component: () => import('@/views/perf/graph'),
+      meta: { title: 'PerfGraph', icon: 'el-icon-s-data' }
     }
     ]
   },
