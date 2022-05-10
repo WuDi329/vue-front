@@ -23,3 +23,11 @@ export function getSize(params) {
   })
 }
 
+export function getAvgSize(params) {
+  return request({
+    url: 'http://localhost:8000/size/getavg/',
+    method: 'get',
+    params
+  })
+}
+

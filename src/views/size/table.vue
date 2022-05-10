@@ -3,15 +3,24 @@
     <el-header>
       <template>
         <div style="margin-top: 20px">
-          <el-select v-model="value" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
+          <el-select v-model="value" placeholder="please select the process you wanna see" style="margin-right: 20px">
             <el-option
               v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" @click="getSizeExperiment">search</el-button>
+          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
+            <el-option
+              v-for="item in options2"
               :key="item.value2"
               :label="item.label"
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addTimeExperiment">add</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addSizeExperiment">add</el-button>
         </div>
       </template>
     </el-header>
@@ -43,7 +52,7 @@
 </template>
 
 <script>
-import { getAllSize, addSize } from '@/api/size'
+import { addSize, getAllSize, getSize } from '@/api/size'
 
 export default {
   filters: {
@@ -61,9 +70,29 @@ export default {
       list: null,
       listLoading: true,
       value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
+      value2: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
       queryloading: false,
       disabled: true,
       options: [{
+        value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
+        label: 'memtier_benchmark'
+      }, {
+        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
+        label: 'memtier_benchmark_static'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      options2: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {
@@ -99,17 +128,23 @@ export default {
         console.log(this.list)
       })
     },
-    getrate(user, sys) {
-      user = Number(user)
-      sys = Number(sys)
-      return (user / (user + sys)).toFixed(2)
-    },
-    addTimeExperiment() {
+    addSizeExperiment() {
       this.listLoading = true
       this.disabled = true
       var params = { 'processname': this.value2 }
       addSize(params).then(response => {
         console.log(response)
+        this.listLoading = false
+        this.disabled = false
+      })
+    },
+    getSizeExperiment() {
+      this.listLoading = true
+      this.disabled = true
+      var params = { 'processname': this.value }
+      getSize(params).then(response => {
+        console.log(response)
+        this.list = response.data
         this.listLoading = false
         this.disabled = false
       })

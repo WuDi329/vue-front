@@ -63,14 +63,13 @@ const actions = {
     })
   },
 
+  // from response get ctoken and set it into store
   getCToken({ commit }) {
     return new Promise((resolve, reject) => {
-      // debugger
       getCSRFtoken().then(response => {
         console.log(response)
         console.log('here is getctoken')
         commit('SET_XCSRFToken', response.Xtoken)
-        // debugger
         resolve()
       }).catch(error => {
         console.log('getctoken error')
