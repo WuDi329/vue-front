@@ -63,15 +63,15 @@ export const constantRoutes = [
     meta: { title: 'Time', icon: 'el-icon-timer' },
     children: [{
       path: 'table',
-      name: 'Table',
+      name: 'TimeTable',
       component: () => import('@/views/time/table'),
-      meta: { title: 'Table', icon: 'table' }
+      meta: { title: 'TimeTable', icon: 'table' }
     },
     {
       path: 'graph',
-      name: 'Graph',
+      name: 'TimeGraph',
       component: () => import('@/views/time/graph'),
-      meta: { title: 'Graph', icon: 'el-icon-s-data' }
+      meta: { title: 'TimeGraph', icon: 'el-icon-s-data' }
     }
     ]
   },

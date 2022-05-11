@@ -1,8 +1,8 @@
 <template>
   <el-container>
     <el-header>
-      <div style="margin-top: 20px; float: right">
-        <el-select v-model="value" placeholder="please select the process you wanna see">
+      <div style="margin-top: 20px">
+        <el-select v-model="value" placeholder="please select the process you wanna see" style="margin-left:40%">
           <el-option
             v-for="item in option"
             :key="item.value"
@@ -10,8 +10,16 @@
             :value="item.value"
           />
         </el-select>
-        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:20px" @click="changeData">search</el-button>
-        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:20px" @click="callback">change</el-button>
+        <el-select v-model="paramsvalue" placeholder="please select the params" style="margin-left: 1%">
+            <el-option
+              v-for="item in paramsoptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="changeData">search</el-button>
+        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="callback">change</el-button>
       </div>
     </el-header>
     <el-main>
@@ -35,8 +43,14 @@ export default {
       theme: 'light',
       disabled: false,
       value: 'memtier_benchmark',
+      paramsvalue: ' ',
       data_set: [],
       options: [],
+      paramsoptions: [{
+        value: ' ',
+        label: 'none'
+      }],
+      params: ' ',
       titles: ['123', '456', '789', '101'],
       options0: {
         legend: {},
@@ -50,10 +64,13 @@ export default {
       },
       options1: {
         title: [
-          { text: 'text_length', textAlign: 'center', left: '25%', top: '45%' },
-          { text: 'data_length', left: '75%', top: '45%', textAlign: 'center' },
-          { text: 'bss_length', textAlign: 'center', left: '25%', top: '90%' },
-          { text: 'total_length', textAlign: 'center', left: '75%', top: '90%' }
+          { text: 'branches miss percents', left: '15%', top: '35%', textAlign: 'center' },
+          { text: 'instructions', textAlign: 'center', left: '83%', top: '75%' },
+          { text: 'l1dcache miss percents', textAlign: 'center', left: '35%', top: '35%' },
+          { text: 'llcdcache miss percents', textAlign: 'center', left: '59%', top: '35%' },
+          { text: 'dtlb miss percents', textAlign: 'center', left: '15%', top: '83%' },
+          { text: 'itlb misses', textAlign: 'center', left: '35%', top: '83%' },
+          { text: 'l1icache misses', textAlign: 'center', left: '59%', top: '83%' }
         ],
         legend: {},
         tooltip: {},
@@ -61,28 +78,24 @@ export default {
           source: []
         },
         series: [
+
           {
             type: 'pie',
-            radius: '20%',
-            center: ['25%', '30%'],
-            title: {
-              text: 'lalalalla',
-              left: '%20',
-              top: '%25'
-            },
+            radius: '18%',
+            center: ['15%', '22%'],
             label: {
               normal: {
                 formatter: '{d}%',
                 textStyle: {
-                  fontSize: 18
+                  fontSize: 15
                 }
               }
             }
           },
           {
             type: 'pie',
-            radius: '20%',
-            center: ['75%', '30%'],
+            radius: '45%',
+            center: ['83%', '46%'],
             encode: {
               itemName: '',
               value: ''
@@ -91,15 +104,15 @@ export default {
               normal: {
                 formatter: '{d}%',
                 textStyle: {
-                  fontSize: 18
+                  fontSize: 15
                 }
               }
             }
           },
           {
             type: 'pie',
-            radius: '20%',
-            center: ['25%', '75%'],
+            radius: '18%',
+            center: ['37%', '22%'],
             encode: {
               itemName: '',
               value: ''
@@ -108,15 +121,15 @@ export default {
               normal: {
                 formatter: '{d}%',
                 textStyle: {
-                  fontSize: 18
+                  fontSize: 15
                 }
               }
             }
           },
           {
             type: 'pie',
-            radius: '20%',
-            center: ['75%', '75%'],
+            radius: '18%',
+            center: ['59%', '22%'],
             encode: {
               itemName: '',
               value: ''
@@ -125,7 +138,58 @@ export default {
               normal: {
                 formatter: '{d}%',
                 textStyle: {
-                  fontSize: 18
+                  fontSize: 15
+                }
+              }
+            }
+          },
+          {
+            type: 'pie',
+            radius: '18%',
+            center: ['15%', '70%'],
+            encode: {
+              itemName: '',
+              value: ''
+            },
+            label: {
+              normal: {
+                formatter: '{d}%',
+                textStyle: {
+                  fontSize: 15
+                }
+              }
+            }
+          },
+          {
+            type: 'pie',
+            radius: '18%',
+            center: ['37%', '70%'],
+            encode: {
+              itemName: '',
+              value: ''
+            },
+            label: {
+              normal: {
+                formatter: '{d}%',
+                textStyle: {
+                  fontSize: 15
+                }
+              }
+            }
+          },
+          {
+            type: 'pie',
+            radius: '18%',
+            center: ['59%', '70%'],
+            encode: {
+              itemName: '',
+              value: ''
+            },
+            label: {
+              normal: {
+                formatter: '{d}%',
+                textStyle: {
+                  fontSize: 15
                 }
               }
             }
@@ -169,7 +233,7 @@ export default {
     },
     getData() {
       this.disabled = true
-      var params = { 'processname': this.value }
+      var params = { 'processname': this.value, 'params': this.params }
       getAvgPerf(params).then(response => {
         console.log('getresponseeeee')
         console.log(response)
@@ -178,19 +242,45 @@ export default {
         var key_list = Object.keys(response.data[0])
         var value_list1 = Object.values(response.data[0])
         var value_list2 = Object.values(response.data[1])
-
         key_list.unshift('leibie')
         value_list1.unshift(pname)
         value_list2.unshift(pname + '_static')
         var data_set = [key_list, value_list1, value_list2]
         this.options0.dataset.source = data_set
-        this.options1.series[1].encode.itemName = key_list[0]
-        this.options1.series[1].encode.value = key_list[2]
-        this.options1.series[2].encode.itemName = key_list[0]
-        this.options1.series[2].encode.value = key_list[3]
-        this.options1.series[3].encode.itemName = key_list[0]
-        this.options1.series[3].encode.value = key_list[4]
-        this.options1.dataset.source = data_set
+
+        
+
+        var key_list2 = ['instructions', 'branches_miss_percents', 'l1dcache miss percents', 'llcdcache miss percents', 'dtlb miss percents', 'itlb misses', 'l1icache misses']
+        key_list2.unshift('leibie')
+        // var value_list11 = [value_list1[1], value_list1[3]/value_list1[2], value_list1[5]/value_list1[4], value_list1[7]/value_list1[6], value_list1[10]/value_list1[9], value_list1[11], value_list1[8]]
+        // var value_list22 = [value_list2[1], value_list2[3]/value_list2[2], value_list2[5]/value_list2[4], value_list2[7]/value_list2[6], value_list2[10]/value_list2[9], value_list2[11], value_list2[8]]
+        var value_list11 = [value_list1[3]/value_list1[2], value_list1[1], value_list1[5]/value_list1[4], value_list1[7]/value_list1[6], value_list1[10]/value_list1[9], value_list1[11], value_list1[8]]
+        var value_list22 = [value_list2[3]/value_list2[2], value_list2[1], value_list2[5]/value_list2[4], value_list2[7]/value_list2[6], value_list2[10]/value_list2[9], value_list2[11], value_list2[8]]
+        value_list11.unshift(pname)
+        value_list22.unshift(pname + '_static')
+
+
+        console.log(key_list)
+        console.log(value_list1)
+        console.log(value_list2)
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        console.log(key_list2)
+        console.log(value_list11)
+        console.log(value_list22)
+
+        this.options1.series[1].encode.itemName = key_list2[0]
+        this.options1.series[1].encode.value = key_list2[2]
+        this.options1.series[2].encode.itemName = key_list2[0]
+        this.options1.series[2].encode.value = key_list2[3]
+        this.options1.series[3].encode.itemName = key_list2[0]
+        this.options1.series[3].encode.value = key_list2[4]
+        this.options1.series[4].encode.itemName = key_list2[0]
+        this.options1.series[4].encode.value = key_list2[5]
+        this.options1.series[5].encode.itemName = key_list2[0]
+        this.options1.series[5].encode.value = key_list2[6]
+        this.options1.series[6].encode.itemName = key_list2[0]
+        this.options1.series[6].encode.value = key_list2[7]
+        this.options1.dataset.source = [key_list2, value_list11, value_list22]
         this.key = 0
         this.drawEcharts(this.options0)
         this.disabled = false

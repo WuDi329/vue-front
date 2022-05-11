@@ -54,7 +54,7 @@ export default {
         tooltip: {},
         title: [
           { text: 'user time(s)', textAlign: 'center', left: '15%', top: '35%' },
-          { text: 'sys time(s)', left: '35%', top: '37%', textAlign: 'center' },
+          { text: 'sys time(s)', left: '35%', top: '35%', textAlign: 'center' },
           { text: 'cpu percent(%)', textAlign: 'center', left: '59%', top: '35%' },
           { text: 'elapse time(s)', textAlign: 'center', left: '15%', top: '83%' },
           { text: 'max size(KB)', textAlign: 'center', left: '83%', top: '75%' },
@@ -232,6 +232,11 @@ export default {
         value_list1.unshift(pname)
         value_list2.unshift(pname + '_static')
         var data_set = [key_list, value_list1, value_list2]
+
+        console.log(key_list)
+        console.log(value_list1)
+        console.log(value_list2)
+
         this.options0.dataset.source = data_set
         this.options1.series[1].encode.itemName = key_list[0]
         this.options1.series[1].encode.value = key_list[2]

@@ -47,6 +47,16 @@
         <!-- width="110" -->
         </el-table-column>
       </el-table>
+      <el-dialog
+  title="新增成功"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>对{{value2}}程序的size分析已完成</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
+  </span>
+</el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -72,6 +82,7 @@ export default {
       value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
       value2: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
       queryloading: false,
+      dialogVisible: false,
       disabled: true,
       options: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
@@ -136,6 +147,7 @@ export default {
         console.log(response)
         this.listLoading = false
         this.disabled = false
+        this.dialogVisible = true
       })
     },
     getSizeExperiment() {

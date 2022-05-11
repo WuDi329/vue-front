@@ -11,9 +11,9 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:20px" @click="getSpecificTime">search</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 2%" @click="getSpecificTime">search</el-button>
 
-          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
+          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 40%">
             <el-option
               v-for="item in options2"
               :key="item.value2"
@@ -21,7 +21,7 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addTimeExperiment">add</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 2%" @click="addTimeExperiment">add</el-button>
         </div>
       </template>
     </el-header>
@@ -70,6 +70,16 @@
         <!-- width="200" -->
         </el-table-column>
       </el-table>
+      <el-dialog
+  title="新增成功"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>对{{value2}}程序的time分析已完成</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
+  </span>
+</el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -97,6 +107,7 @@ export default {
       value2: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
       queryloading: false,
       disabled: true,
+      dialogVisible: false,
       options: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
@@ -179,6 +190,7 @@ export default {
         console.log(response)
         this.listLoading = false
         this.disabled = false
+        this.dialogVisible = true
       })
     }
   }

@@ -12,24 +12,34 @@
             />
           </el-select>
           <el-button :disabled="disabled" type="primary" :queryloading="false" @click="getPerfExperiment">search</el-button>
-          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
+          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 20%; margin-right: 2%">
             <el-option
               v-for="item in options2"
-              :key="item.value2"
+              :key="item.value"
               :label="item.label"
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addPerfExperiment">add</el-button>
+          <el-select v-model="paramsvalue" placeholder="please select the params" style="margin-right: 1%">
+            <el-option
+              v-for="item in paramsoptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button :disabled="disabled" type="primary" :queryloading="false"  @click="addPerfExperiment">add</el-button>
         </div>
       </template>
     </el-header>
     <el-main>
       <template>
   <el-table
+    v-loading="listLoading"
     :data="list"
     border
     style="width: 100%"
+    element-loading-text="Loading"
     fit>
     <el-table-column
       fixed
@@ -131,6 +141,16 @@
     </el-table-column>
   </el-table>
 </template>
+<el-dialog
+  title="新增成功"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>对{{value2}}程序的perf分析已完成</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
+  </span>
+</el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -155,8 +175,14 @@ export default {
       listLoading: true,
       value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
       value2: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
+      paramsvalue: ' ',
       queryloading: false,
       disabled: true,
+      dialogVisible: false,
+      paramsoptions: [{
+        value: ' ',
+        label: 'none'
+      }],
       options: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
@@ -212,6 +238,12 @@ export default {
         console.log(this.list)
       })
     },
+    handleClose(done) {
+        this.$confirm('confirm').then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
     dateFormat(row, column) {
       var date = row[column.property]
       return moment(date).format('YY-MM-DD HH:mm:ss')
@@ -219,12 +251,14 @@ export default {
     addPerfExperiment() {
       this.listLoading = true
       this.disabled = true
-      var params = { 'processname': this.value2 }
+      var params = { 'processname': this.value2, 'params': this.paramsvalue }
       addPerf(params).then(response => {
         console.log(response)
         this.listLoading = false
         this.disabled = false
+        this.dialogVisible = true
       })
+      
     },
     getPerfExperiment() {
       this.listLoading = true
@@ -234,7 +268,7 @@ export default {
         console.log(response)
         this.list = response.data
         this.listLoading = false
-        this.disabled = false
+        this.disabled = true
       })
     }
   }
