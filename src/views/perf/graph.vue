@@ -11,13 +11,13 @@
           />
         </el-select>
         <el-select v-model="paramsvalue" placeholder="please select the params" style="margin-left: 1%">
-            <el-option
-              v-for="item in paramsoptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
+          <el-option
+            v-for="item in paramsoptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="changeData">search</el-button>
         <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="callback">change</el-button>
       </div>
@@ -43,14 +43,13 @@ export default {
       theme: 'light',
       disabled: false,
       value: 'memtier_benchmark',
-      paramsvalue: ' ',
       data_set: [],
       options: [],
       paramsoptions: [{
         value: ' ',
         label: 'none'
       }],
-      params: ' ',
+      paramsvalue: ' ',
       titles: ['123', '456', '789', '101'],
       options0: {
         legend: {},
@@ -233,7 +232,7 @@ export default {
     },
     getData() {
       this.disabled = true
-      var params = { 'processname': this.value, 'params': this.params }
+      var params = { 'processname': this.value, 'params': this.paramsvalue }
       getAvgPerf(params).then(response => {
         console.log('getresponseeeee')
         console.log(response)
@@ -248,17 +247,14 @@ export default {
         var data_set = [key_list, value_list1, value_list2]
         this.options0.dataset.source = data_set
 
-        
-
         var key_list2 = ['instructions', 'branches_miss_percents', 'l1dcache miss percents', 'llcdcache miss percents', 'dtlb miss percents', 'itlb misses', 'l1icache misses']
         key_list2.unshift('leibie')
         // var value_list11 = [value_list1[1], value_list1[3]/value_list1[2], value_list1[5]/value_list1[4], value_list1[7]/value_list1[6], value_list1[10]/value_list1[9], value_list1[11], value_list1[8]]
         // var value_list22 = [value_list2[1], value_list2[3]/value_list2[2], value_list2[5]/value_list2[4], value_list2[7]/value_list2[6], value_list2[10]/value_list2[9], value_list2[11], value_list2[8]]
-        var value_list11 = [value_list1[3]/value_list1[2], value_list1[1], value_list1[5]/value_list1[4], value_list1[7]/value_list1[6], value_list1[10]/value_list1[9], value_list1[11], value_list1[8]]
-        var value_list22 = [value_list2[3]/value_list2[2], value_list2[1], value_list2[5]/value_list2[4], value_list2[7]/value_list2[6], value_list2[10]/value_list2[9], value_list2[11], value_list2[8]]
+        var value_list11 = [value_list1[3] / value_list1[2], value_list1[1], value_list1[5] / value_list1[4], value_list1[7] / value_list1[6], value_list1[10] / value_list1[9], value_list1[11], value_list1[8]]
+        var value_list22 = [value_list2[3] / value_list2[2], value_list2[1], value_list2[5] / value_list2[4], value_list2[7] / value_list2[6], value_list2[10] / value_list2[9], value_list2[11], value_list2[8]]
         value_list11.unshift(pname)
         value_list22.unshift(pname + '_static')
-
 
         console.log(key_list)
         console.log(value_list1)

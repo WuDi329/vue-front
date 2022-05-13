@@ -3,7 +3,7 @@
     <el-header>
       <template>
         <div style="margin-top: 20px">
-          <el-select v-model="value" placeholder="please select the process you wanna see">
+          <el-select v-model="value" placeholder="please select the process you wanna see" style=" width: 15%">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -11,17 +11,33 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 2%" @click="getSpecificTime">search</el-button>
-
-          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 40%">
+          <el-select v-model="paramsvalue1" placeholder="please select the params" style="width:15%; margin-left: 1%">
             <el-option
-              v-for="item in options2"
+              v-for="item in paramsoptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 1%" @click="getSpecificTime">search</el-button>
+
+          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 26%; width: 15%">
+            <el-option
+              v-for="item in options"
               :key="item.value2"
               :label="item.label"
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 2%" @click="addTimeExperiment">add</el-button>
+          <el-select v-model="paramsvalue" placeholder="please select the params" style="margin-left: 1%; width:15%">
+            <el-option
+              v-for="item in paramsoptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 1%" @click="addTimeExperiment">add</el-button>
         </div>
       </template>
     </el-header>
@@ -71,15 +87,16 @@
         </el-table-column>
       </el-table>
       <el-dialog
-  title="新增成功"
-  :visible.sync="dialogVisible"
-  width="30%"
-  :before-close="handleClose">
-  <span>对{{value2}}程序的time分析已完成</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
-  </span>
-</el-dialog>
+        title="新增成功"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>对{{ value2 }}程序的time分析已完成</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
+        </span>
+      </el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -108,26 +125,13 @@ export default {
       queryloading: false,
       disabled: true,
       dialogVisible: false,
-      options: [{
-        value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
-        label: 'memtier_benchmark'
-      }, {
-        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
-        label: 'memtier_benchmark_static'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+      paramsvalue: ' ',
+      paramsvalue1: ' ',
+      paramsoptions: [{
+        value: ' ',
+        label: 'none'
       }],
-      options2: [{
+      options: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {
@@ -165,7 +169,7 @@ export default {
     },
     getSpecificTime() {
       this.listLoading = true
-      var params = { 'processname': this.value }
+      var params = { 'processname': this.value, 'params': this.paramsvalue1 }
       getTime(params).then(response => {
         console.log(response)
         this.list = response.data
@@ -185,7 +189,7 @@ export default {
     addTimeExperiment() {
       this.listLoading = true
       this.disabled = true
-      var params = { 'processname': this.value2 }
+      var params = { 'processname': this.value2, 'params': this.paramsvalue }
       addTime(params).then(response => {
         console.log(response)
         this.listLoading = false

@@ -3,7 +3,7 @@
     <el-header>
       <template>
         <div style="margin-top: 20px">
-          <el-select v-model="value" placeholder="please select the process you wanna see" style="margin-right: 20px">
+          <el-select v-model="value" placeholder="please select the process you wanna see" style=" width: 15%">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -11,16 +11,17 @@
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" @click="getSizeExperiment">search</el-button>
-          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 660px; margin-right: 20px">
+
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 1%" @click="getSizeExperiment">search</el-button>
+          <el-select v-model="value2" placeholder="please select the process you wanna run" style="margin-left: 58%; width: 15%">
             <el-option
-              v-for="item in options2"
+              v-for="item in options"
               :key="item.value2"
               :label="item.label"
               :value="item.value"
             />
           </el-select>
-          <el-button :disabled="disabled" type="primary" :queryloading="false" style="float: right" @click="addSizeExperiment">add</el-button>
+          <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left: 1%" @click="addSizeExperiment">add</el-button>
         </div>
       </template>
     </el-header>
@@ -48,15 +49,16 @@
         </el-table-column>
       </el-table>
       <el-dialog
-  title="新增成功"
-  :visible.sync="dialogVisible"
-  width="30%"
-  :before-close="handleClose">
-  <span>对{{value2}}程序的size分析已完成</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
-  </span>
-</el-dialog>
+        title="新增成功"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>对{{ value2 }}程序的size分析已完成</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">confirm</el-button>
+        </span>
+      </el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -85,25 +87,6 @@ export default {
       dialogVisible: false,
       disabled: true,
       options: [{
-        value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
-        label: 'memtier_benchmark'
-      }, {
-        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
-        label: 'memtier_benchmark_static'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      options2: [{
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {

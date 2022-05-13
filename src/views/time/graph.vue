@@ -1,8 +1,8 @@
 <template>
   <el-container>
     <el-header>
-      <div style="margin-top: 20px; float: right">
-        <el-select v-model="value" placeholder="please select the process you wanna see">
+      <div style="margin-top: 20px">
+        <el-select v-model="value" placeholder="please select the process you wanna see" style="margin-left:40%">
           <el-option
             v-for="item in option"
             :key="item.value"
@@ -10,9 +10,16 @@
             :value="item.value"
           />
         </el-select>
-
-        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:20px" @click="changeData">search</el-button>
-        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:20px" @click="callback">change</el-button>
+        <el-select v-model="paramsvalue" placeholder="please select the params" style="margin-left: 1%">
+          <el-option
+            v-for="item in paramsoptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="changeData">search</el-button>
+        <el-button :disabled="disabled" type="primary" :queryloading="false" style="margin-left:1%" @click="callback">change</el-button>
       </div>
     </el-header>
     <el-main>
@@ -37,6 +44,7 @@ export default {
       value: 'memtier_benchmark',
       key: 0,
       options: [],
+      paramsvalue: ' ',
       options0: {
         legend: {},
         tooltip: {},
@@ -48,7 +56,10 @@ export default {
         series: [{ type: 'bar', seriesLayoutBy: 'row' }, { type: 'bar', seriesLayoutBy: 'row' }]
       },
       data_set: [],
-
+      paramsoptions: [{
+        value: ' ',
+        label: 'none'
+      }],
       options1: {
         legend: {},
         tooltip: {},
@@ -218,7 +229,7 @@ export default {
     },
     getData() {
       this.disabled = true
-      var params = { 'processname': this.value }
+      var params = { 'processname': this.value, 'params': this.paramsvalue }
       getAvgTime(params).then(response => {
         console.log('getresponseeeee')
         console.log(response)
@@ -232,10 +243,6 @@ export default {
         value_list1.unshift(pname)
         value_list2.unshift(pname + '_static')
         var data_set = [key_list, value_list1, value_list2]
-
-        console.log(key_list)
-        console.log(value_list1)
-        console.log(value_list2)
 
         this.options0.dataset.source = data_set
         this.options1.series[1].encode.itemName = key_list[0]
@@ -264,17 +271,11 @@ export default {
       this.disabled = false
     },
     drawEcharts(option) {
-      debugger
-      console.log('option init')
-      console.log(option)
       // get the dom of chart
       const dom = this.$refs.hbar
       if (dom) {
-        console.log('aaaaaaa')
         // new the echarts instance
         this.instance = echarts.init(dom, this.theme)
-        console.log(this.instance)
-        console.log('here is instanceeeeee')
         // save the configurations
         this.instance.setOption(option)
       }
