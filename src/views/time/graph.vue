@@ -59,7 +59,12 @@ export default {
       paramsoptions: [{
         value: ' ',
         label: 'none'
-      }],
+      },
+      {
+        value: ' -n 10000 -c 100 -t 8 localhost:8000/admin',
+        label: 'htstress'
+      }
+      ],
       options1: {
         legend: {},
         tooltip: {},
@@ -197,8 +202,8 @@ export default {
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {
-        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
-        label: 'memtier_benchmark_static'
+        value: '/home/wudi/Desktop/htstress/htstress',
+        label: 'htstress'
       }, {
         value: '选项2',
         label: '双皮奶'

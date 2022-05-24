@@ -136,20 +136,11 @@ export default {
         value: '/home/wudi/Desktop/memtier_benchmark/memtier_benchmark',
         label: 'memtier_benchmark'
       }, {
-        value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
-        label: 'memtier_benchmark_static'
+        value: '/home/wudi/Desktop/htstress/htstress',
+        label: 'htstress'
       }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: '/home/wudi/Tiny-WebServer/tiny',
+        label: 'tinywebserver'
       }]
     }
   },

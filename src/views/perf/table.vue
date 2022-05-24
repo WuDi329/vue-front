@@ -208,11 +208,11 @@ export default {
         value: '/home/wudi/Desktop/mem_sta/memtier_benchmark/memtier_benchmark_static',
         label: 'memtier_benchmark_static'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: '/home/wudi/Desktop/perfer/bin/perfer',
+        label: 'perfer'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
+        value: '/home/wudi/Desktop/perfer_sta/perfer/bin/perfer_static',
+        label: 'perfer_static'
       }, {
         value: '选项4',
         label: '龙须面'
